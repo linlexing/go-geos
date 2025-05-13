@@ -9,7 +9,7 @@ import (
 )
 
 // Scan implements database/sql.Scanner.
-func (g *Geometry) Scan(src interface{}) error {
+func (g *Geometry) Scan(src any) error {
 	switch src := src.(type) {
 	case nil:
 		g.Geom = nil
@@ -45,5 +45,5 @@ func (g Geometry) Value() (driver.Value, error) {
 	if g.Geom == nil {
 		return nil, nil //nolint:nilnil
 	}
-	return hex.EncodeToString(g.Geom.ToEWKBWithSRID()), nil
+	return hex.EncodeToString(g.ToEWKBWithSRID()), nil
 }
