@@ -1,4 +1,5 @@
 package geos
+
 // #include <stdlib.h>
 // #include "go-geos.h"
 import "C"
@@ -12,5 +13,6 @@ func (c *Context) NewGeomFromWKB(wkb []byte) (*Geom, error) {
 	}
 	wkbCBuf := C.CBytes(wkb)
 	defer C.free(wkbCBuf)
+	// return c.newGeom(C.GEOSWKBReader_read_r(c.handle, c.wkbReader, (*C.uchar)(wkbCBuf), C.ulong(len(wkb))), nil), c.err
 	return c.newGeom(C.GEOSWKBReader_read_r(c.handle, c.wkbReader, (*C.uchar)(wkbCBuf), C.ulonglong(C.ulong(len(wkb)))), nil), c.err
 }
