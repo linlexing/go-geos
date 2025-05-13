@@ -181,18 +181,18 @@ func (c *Context) NewGeomFromGeoJSON(geoJSON string) (*Geom, error) {
 }
 
 // NewGeomFromWKB parses a geometry in WKB format from wkb.
-func (c *Context) NewGeomFromWKB(wkb []byte) (*Geom, error) {
-	c.Lock()
-	defer c.Unlock()
-	c.err = nil
-	if c.wkbReader == nil {
-		c.wkbReader = C.GEOSWKBReader_create_r(c.handle)
-	}
-	wkbCBuf := C.CBytes(wkb)
-	defer C.free(wkbCBuf)
-	// return c.newGeom(C.GEOSWKBReader_read_r(c.handle, c.wkbReader, (*C.uchar)(wkbCBuf), (C.ulong)(len(wkb))), nil), c.err
-	return c.newGeom(C.GEOSWKBReader_read_r(c.handle, c.wkbReader, (*C.uchar)(wkbCBuf), C.ulonglong(C.ulong(len(wkb)))), nil), c.err
-}
+// func (c *Context) NewGeomFromWKB(wkb []byte) (*Geom, error) {
+// 	c.Lock()
+// 	defer c.Unlock()
+// 	c.err = nil
+// 	if c.wkbReader == nil {
+// 		c.wkbReader = C.GEOSWKBReader_create_r(c.handle)
+// 	}
+// 	wkbCBuf := C.CBytes(wkb)
+// 	defer C.free(wkbCBuf)
+// 	// return c.newGeom(C.GEOSWKBReader_read_r(c.handle, c.wkbReader, (*C.uchar)(wkbCBuf), (C.ulong)(len(wkb))), nil), c.err
+// 	return c.newGeom(C.GEOSWKBReader_read_r(c.handle, c.wkbReader, (*C.uchar)(wkbCBuf), C.ulonglong(C.ulong(len(wkb)))), nil), c.err
+// }
 
 // NewGeomFromWKT parses a geometry in WKT format from wkt.
 func (c *Context) NewGeomFromWKT(wkt string) (*Geom, error) {
